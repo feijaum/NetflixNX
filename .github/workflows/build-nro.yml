@@ -12,10 +12,10 @@ jobs:
       image: devkitpro/devkita64:latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install Switch SDL2
+      - name: Verify Switch toolchain
         run: |
-          dkp-pacman -Syu --noconfirm
-          dkp-pacman -S --needed --noconfirm switch-sdl2
+          test -f "$DEVKITPRO/libnx/include/switch.h"
+          test -f "$DEVKITPRO/portlibs/switch/include/SDL2/SDL.h"
       - name: Build NetflixNX
         run: make -j2
       - name: Verify output
