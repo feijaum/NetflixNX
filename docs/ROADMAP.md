@@ -1,41 +1,28 @@
 # Roadmap
-
 ## 0.1 — Shell nativo
-- [x] devkitPro/libnx + SDL2
-- [x] renderer 1280×720
-- [x] D-pad/analógico e touchscreen
-- [x] navegação L/R
-
+- [x] devkitPro/libnx + SDL2, 1280×720
+- [x] controle + touch
 ## 0.2 — UX TV
-- [x] hero e rows
-- [x] foco TV/console
-- [x] details e player shell
-- [x] A/B e touch
-- [x] carrossel horizontal com easing
-- [x] Search keyboard shell
-- [x] estado inicial de perfil/settings
-- [ ] fonte/labels reais e ícones próprios
-- [ ] teclado com caracteres renderizados
-- [ ] tela dedicada de perfis
+- [x] hero, rows, details e player shell
+- [x] carrossel com easing
+- [x] teclado de busca shell
+- [x] tela dedicada de perfis + animação de foco
+- [x] troca de perfil via Settings
+- [ ] fonte/labels e ícones próprios
 - [ ] persistência local
-
 ## 0.3 — Capability probe
-- [ ] relatório TLS/HTTP
-- [ ] teste H.264 com mídia própria
+- [x] módulo inicial de probe de rede/NIFM e memória
+- [ ] exibir/exportar relatório no app
+- [ ] TLS/HTTP
+- [ ] H.264 com mídia própria
 - [ ] áudio
-- [ ] deko3d/NVDEC spike
-- [ ] memória em title mode
-
+- [ ] deko3d/NVDEC
 ## 0.4 — Viabilidade Netflix
-- [ ] fluxo oficial de autenticação aplicável
+- [ ] autenticação oficial aplicável
 - [ ] DRM/CDM oficialmente suportado
-- [ ] caminho autorizado compatível com homebrew
+- [ ] caminho autorizado compatível
 - [ ] blockers reproduzíveis
-- [ ] decisão técnica de viabilidade
-
-## 0.5+ — se 0.4 for viável
-- [ ] catálogo e sessão autorizados
-- [ ] playback
-- [ ] legendas/áudio
-- [ ] resume/watch state
+## 0.5+ — somente se 0.4 for viável
+- [ ] catálogo/sessão autorizados
+- [ ] playback, legendas/áudio, resume
 - [ ] testes em hardware real
