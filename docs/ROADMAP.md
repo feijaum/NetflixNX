@@ -3,23 +3,21 @@
 ## 0.1 — Shell nativo
 - [x] devkitPro/libnx + SDL2
 - [x] renderer 1280×720
-- [x] D-pad/analógico
-- [x] touchscreen
+- [x] D-pad/analógico e touchscreen
 - [x] navegação L/R
 
 ## 0.2 — UX TV
-- [x] hero
-- [x] duas rows de cards
+- [x] hero e rows
 - [x] foco TV/console
-- [x] details screen
-- [x] player controls shell
-- [x] A/B e touch integrados
-- [ ] SDL_ttf / fonte empacotada
-- [ ] ícones próprios
-- [ ] scroll horizontal com easing
-- [ ] Search keyboard
-- [ ] Profiles
-- [ ] persistência de preferências
+- [x] details e player shell
+- [x] A/B e touch
+- [x] carrossel horizontal com easing
+- [x] Search keyboard shell
+- [x] estado inicial de perfil/settings
+- [ ] fonte/labels reais e ícones próprios
+- [ ] teclado com caracteres renderizados
+- [ ] tela dedicada de perfis
+- [ ] persistência local
 
 ## 0.3 — Capability probe
 - [ ] relatório TLS/HTTP
@@ -36,8 +34,7 @@
 - [ ] decisão técnica de viabilidade
 
 ## 0.5+ — se 0.4 for viável
-- [ ] catálogo autorizado
-- [ ] sessão autorizada
+- [ ] catálogo e sessão autorizados
 - [ ] playback
 - [ ] legendas/áudio
 - [ ] resume/watch state
