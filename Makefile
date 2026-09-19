@@ -27,7 +27,8 @@ export VPATH := $(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
 export DEPSDIR := $(CURDIR)/$(BUILD)
 CFILES := $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES := $(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
-export OFILES := $(CPPFILES:.cpp=.o) $(CFILES:.c=.o)\nexport LD := $(CXX)
+export OFILES := $(CPPFILES:.cpp=.o) $(CFILES:.c=.o)
+export LD := $(CXX)
 export INCLUDE := $(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) $(foreach dir,$(LIBDIRS),-I$(dir)/include)
 export LIBPATHS := $(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 .PHONY: all clean
@@ -39,5 +40,10 @@ clean:
 	@echo clean ...
 	@rm -fr $(BUILD) $(TARGET).nro $(TARGET).nacp $(TARGET).elf
 else
-DEPENDS := $(OFILES:.o=.d)\n\n$(OUTPUT).nro: $(OUTPUT).elf\n$(OUTPUT).elf: $(OFILES)\n\n-include $(DEPENDS)
+DEPENDS := $(OFILES:.o=.d)
+
+$(OUTPUT).nro: $(OUTPUT).elf
+$(OUTPUT).elf: $(OFILES)
+
+-include $(DEPENDS)
 endif
