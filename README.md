@@ -1,43 +1,23 @@
 # NetflixNX
 
-Cliente homebrew experimental para Nintendo Switch (Atmosphère) com foco em uma experiência de streaming **TV/console**, navegação por Joy-Con/Pro Controller e suporte a toque no modo portátil.
+Cliente homebrew experimental para Nintendo Switch (Atmosphère), desenhado como uma experiência de streaming **TV/console** com Joy-Con/Pro Controller e touchscreen no modo portátil.
 
-> Status: **Fase 0/1 — shell nativo + investigação de viabilidade do playback oficial**.
+> Status: **UI prototype 0.2 + investigação de viabilidade do playback oficial**.
 
-## Objetivo
+## UI 0.2
 
-O NetflixNX pretende ser um cliente para uso pessoal com uma assinatura Netflix válida. O projeto **não** fornece conteúdo, não contorna assinatura, geobloqueio, DRM/CDM ou controles de acesso e não inclui chaves, cookies, tokens ou credenciais.
+O shell agora inclui:
+- home em estilo 10-foot TV, com hero e duas fileiras de mídia;
+- foco visual para navegação por controle;
+- D-pad e analógico esquerdo;
+- L/R para alternar Home, Search, My Netflix e Settings;
+- A para abrir/selecionar e B para voltar;
+- tela de detalhes;
+- shell de player com play/pause;
+- touchscreen com tap-to-focus e segundo toque para abrir;
+- layout 1280×720 para dock/handheld.
 
-A prioridade é funcionar diretamente no Switch, sem PC/Android/servidor de vídeo pago como requisito permanente.
-
-## UX alvo
-
-- Interface 1280×720 pensada para TV/console.
-- D-pad / analógico: mover foco.
-- A: selecionar.
-- B: voltar.
-- L/R: trocar seções.
-- +: menu/saída.
-- Touchscreen: tocar nos mesmos elementos focáveis no modo portátil.
-- Controles físicos e toque coexistem.
-- Navegação inspirada na ergonomia de apps de mídia do Switch, sem copiar assets proprietários.
-
-## Arquitetura planejada
-
-```
-src/
-  app/        ciclo de vida e estado
-  ui/         shell 10-foot UI
-  input/      Joy-Con/Pro Controller/touch
-  platform/   integração libnx/SDL
-  playback/   interface de playback (sem implementação DRM)
-docs/
-  ARCHITECTURE.md
-  ROADMAP.md
-  DRM-FEASIBILITY.md
-```
-
-A pesquisa técnica usa o Green-NX como referência arquitetural para partes genéricas do Switch: execução em title mode, UI/input, decode por hardware e renderização. Qualquer código GPL incorporado no futuro deverá manter compatibilidade de licença e atribuição.
+Os cards continuam sendo placeholders: nenhuma arte, catálogo ou asset proprietário da Netflix é distribuído.
 
 ## Build
 
@@ -47,29 +27,36 @@ Requer devkitPro/devkitA64, libnx e SDL2 para Switch.
 make
 ```
 
-Saída esperada:
+Saída esperada: `netflixnx.nro`.
 
-```
-netflixnx.nro
-```
+## Controles
 
-## Escopo atual
+| Controle | Ação |
+|---|---|
+| D-pad / L-stick | mover foco |
+| A | selecionar / play-pause no shell |
+| B | voltar |
+| L / R | seção anterior/próxima |
+| + | sair |
+| Touch | selecionar; tocar novamente abre |
 
-O primeiro executável é deliberadamente um **shell de UI**: navegação por controle + touch e telas Home/Search/My Netflix/Settings. O módulo de playback fica atrás de uma interface e só será conectado depois de confirmar um caminho compatível com o serviço oficial e o DRM exigido.
+## Limite atual
 
-## Regra de segurança do projeto
+A interface e a navegação são independentes do playback. A reprodução Netflix só será conectada se for encontrado um caminho autorizado e compatível com os requisitos atuais do serviço. O projeto não implementa bypass de DRM, extração de CDM/chaves, captura indevida de tokens ou redistribuição de conteúdo.
 
-Não implementar:
-- bypass de Widevine/PlayReady ou outro DRM;
-- extração/uso de CDM ou chaves de terceiros;
-- captura/reuso indevido de cookies/tokens;
-- endpoints para conteúdo sem autorização;
-- redistribuição de vídeo da Netflix.
+## Próximas etapas
 
-Se o playback nativo oficial não for tecnicamente possível no ambiente homebrew, isso será documentado como blocker em vez de substituir por um bypass.
+1. adicionar texto/fontes e ícones próprios;
+2. carrosséis com scroll e animação de foco;
+3. busca/teclado e perfis;
+4. capability probe de rede, codecs e hardware decode com mídia própria;
+5. investigar autenticação/DRM oficial e documentar blockers;
+6. conectar playback somente se a etapa anterior for viável.
+
+Veja `docs/ROADMAP.md` e `docs/DRM-FEASIBILITY.md`.
 
 ## Licença
 
-GPL-3.0-or-later. Veja `LICENSE`.
+GPL-3.0-or-later.
 
-Netflix, Nintendo Switch e demais marcas pertencem aos respectivos titulares. Este projeto não é afiliado, aprovado ou suportado por Netflix ou Nintendo.
+Netflix e Nintendo Switch são marcas de seus respectivos titulares. Projeto não afiliado à Netflix ou Nintendo.
