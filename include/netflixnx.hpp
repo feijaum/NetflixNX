@@ -4,13 +4,13 @@
 
 namespace nx {
 enum class Screen { Home, Search, MyNetflix, Settings };
-enum class View { Profiles, Browse, Details, Player };
+enum class View { Login, Profiles, Browse, Details, Player };
 
 struct AppState {
     Screen screen = Screen::Home;
-    View view = View::Profiles;
+    View view = View::Login;
     int focusedCard = 0, focusedRow = 0, detailsAction = 0;
-    int searchKey = 0, searchLength = 0, profile = 0;
+    int searchKey = 0, searchLength = 0, profile = 0, loginAction = 0;
     float scrollX[2] = {0,0}, targetScrollX[2] = {0,0};
     float focusPulse = 0.0f;
     bool playerPaused = false, running = true, touchWasDown = false;
