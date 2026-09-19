@@ -1,0 +1,29 @@
+name: Build Switch NRO
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-nro:
+    runs-on: ubuntu-latest
+    container:
+      image: devkitpro/devkita64:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Switch SDL2
+        run: |
+          dkp-pacman -Syu --noconfirm
+          dkp-pacman -S --needed --noconfirm switch-sdl2
+      - name: Build NetflixNX
+        run: make -j2
+      - name: Verify output
+        run: test -f netflixnx.nro
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NetflixNX-Switch
+          path: |
+            netflixnx.nro
+            netflixnx.nacp
+          if-no-files-found: error
