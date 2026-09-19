@@ -1,16 +1,30 @@
 #include "netflixnx.hpp"
 
-int main(int argc, char** argv) {
-    socketInitializeDefault();
+int main(int, char**) {
+    if (R_FAILED(socketInitializeDefault())) return 1;
+
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0) {
         socketExit();
-        return 1;
+        return 2;
     }
 
-    SDL_Window* window = SDL_CreateWindow("NetflixNX",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_SHOWN);
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1,
-        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_Window* window = SDL_CreateWindow(
+        "NetflixNX", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        1280, 720, SDL_WINDOW_SHOWN);
+    if (!window) {
+        SDL_Quit();
+        socketExit();
+        return 3;
+    }
+
+    SDL_Renderer* renderer = SDL_CreateRenderer(
+        window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (!renderer) {
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        socketExit();
+        return 4;
+    }
 
     PadState pad;
     padConfigureInput(1, HidNpadStyleSet_NpadStandard);
@@ -18,17 +32,20 @@ int main(int argc, char** argv) {
 
     nx::AppState state;
     Uint32 previous = SDL_GetTicks();
+
     while (appletMainLoop() && state.running) {
         SDL_Event event;
-        while (SDL_PollEvent(&event)) if (event.type == SDL_QUIT) state.running = false;
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) state.running = false;
+        }
 
-        Uint32 now = SDL_GetTicks();
-        float dt = (now - previous) / 1000.0f;
+        const Uint32 now = SDL_GetTicks();
+        float dt = static_cast<float>(now - previous) / 1000.0f;
         previous = now;
         if (dt > 0.05f) dt = 0.05f;
 
         padUpdate(&pad);
-        nx::handleInput(state, pad, renderer);
+        nx::handleInput(state, pad);
         nx::update(state, dt);
         nx::render(renderer, state);
         SDL_RenderPresent(renderer);
