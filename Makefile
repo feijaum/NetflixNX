@@ -39,8 +39,5 @@ clean:
 	@echo clean ...
 	@rm -fr $(BUILD) $(TARGET).nro $(TARGET).nacp $(TARGET).elf
 else
-DEPENDS := $(OFILES:.o=.d)
-$(OUTPUT).nro: $(OUTPUT).elf
-$(OUTPUT).elf: $(OFILES)
--include $(DEPENDS)
+DEPENDS := $(OFILES:.o=.d)\n\n$(OUTPUT).nro: $(OUTPUT).elf\n$(OUTPUT).elf: $(OFILES)\n\n-include $(DEPENDS)
 endif
