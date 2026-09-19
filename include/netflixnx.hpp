@@ -17,6 +17,6 @@ struct AppState {
     Uint32 lastInputTick = 0;
 };
 void update(AppState&, float);
-void handleInput(AppState&, PadState&, SDL_Renderer*);
+void handleInput(AppState&, PadState&);
 void render(SDL_Renderer*, const AppState&);
 }
