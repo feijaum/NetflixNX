@@ -4,12 +4,12 @@ $(error "Please set DEVKITPRO in your environment")
 endif
 
 TOPDIR ?= $(CURDIR)
+
 include $(DEVKITPRO)/libnx/switch_rules
 
 TARGET      := netflixnx
 BUILD       := build
 SOURCES     := src
-DATA        := data
 INCLUDES    := include
 
 ARCH        := -march=armv8-a+crc+crypto -mtune=cortex-a57 -mtp=soft -fPIE
@@ -48,6 +48,14 @@ clean:
 	@rm -fr $(BUILD) $(TARGET).nro $(TARGET).nacp $(TARGET).elf $(TARGET).map
 
 else
+
+# switch_rules/base_rules compile recipes consume these variables in the
+# recursive build directory. Rebuild the project include path from TOPDIR here
+# so it cannot be lost or resolved relative to build/.
+INCLUDE := -I$(TOPDIR)/include \
+           $(foreach dir,$(LIBDIRS),-I$(dir)/include)
+CFLAGS += $(INCLUDE)
+CXXFLAGS += $(INCLUDE)
 
 DEPENDS := $(OFILES:.o=.d)
 
